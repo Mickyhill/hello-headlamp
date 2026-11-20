@@ -1,15 +1,24 @@
 # hello-headlamp
 
-This is the default template README for [Headlamp Plugins](https://github.com/kubernetes-sigs/headlamp).
+A small Headlamp plugin I built to learn the plugin system.
 
-- The description of your plugin should go here.
-- You should also edit the package.json file meta data (like name and description).
+## What it does
 
-## Developing Headlamp plugins
+- Adds a Say Hello button to the app bar
+- Adds a Welcome entry to the cluster sidebar
+- Shows a Welcome page with the number of nodes in the cluster, plus each node's name and kubelet version, read live with K8s.ResourceClasses.Node.useList()
 
-For more information on developing Headlamp plugins, please refer to:
+## Run it locally
 
-- [Getting Started](https://headlamp.dev/docs/latest/development/plugins/), How to create a new Headlamp plugin.
-- [API Reference](https://headlamp.dev/docs/latest/development/api/), API documentation for what you can do
-- [UI Component Storybook](https://headlamp.dev/docs/latest/development/frontend/#storybook), pre-existing components you can use when creating your plugin.
-- [Plugin Examples](https://github.com/kubernetes-sigs/headlamp/tree/main/plugins/examples), Example plugins you can look at to see how it's done.
+You need Node 22 or later, the Headlamp desktop app and a Kubernetes cluster, such as Docker Desktop with Kubernetes turned on.
+
+```
+npm install
+npm run start
+```
+
+Reload Headlamp with Ctrl + R, open your cluster and click Welcome at the bottom of the sidebar.
+
+## Notes
+
+Creating the plugin with @kinvolk/headlamp-plugin 0.14.0 failed with an EINTEGRITY error. Creating with --noinstall, deleting package-lock.json and running npm install fixed the problem. The Headlamp maintainers fixed this upstream in issue 8221.
