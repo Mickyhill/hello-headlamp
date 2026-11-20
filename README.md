@@ -1,5 +1,6 @@
 # hello-headlamp
 
+- Adds a Pods page under Welcome with a sortable, filterable list of pods, built with ResourceListView
 A small Headlamp plugin I built to learn the plugin system.
 
 ## What it does

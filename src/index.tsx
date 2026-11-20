@@ -4,7 +4,10 @@ import {
   registerRoute,
   registerSidebarEntry,
 } from '@kinvolk/headlamp-plugin/lib';
-import { SectionBox } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
+import {
+  ResourceListView,
+  SectionBox,
+} from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { Button, Typography } from '@mui/material';
 
 function WelcomePage() {
@@ -38,6 +41,25 @@ function WelcomePage() {
   );
 }
 
+function PodsPage() {
+  return (
+    <ResourceListView
+      title="Pods"
+      resourceClass={K8s.ResourceClasses.Pod}
+      columns={[
+        'name',
+        'namespace',
+        {
+          id: 'phase',
+          label: 'Phase',
+          getValue: (pod: any) => pod.jsonData.status?.phase ?? '-',
+        },
+        'age',
+      ]}
+    />
+  );
+}
+
 function HelloButton() {
   const handleClick = () => {
     alert('Hello from my first Headlamp plugin!');
@@ -64,10 +86,25 @@ registerSidebarEntry({
   icon: 'mdi:kubernetes',
 });
 
+registerSidebarEntry({
+  parent: 'welcome',
+  name: 'welcome-pods',
+  label: 'Pods',
+  url: '/welcome/pods',
+});
+
 registerRoute({
   path: '/welcome',
   sidebar: 'welcome',
   name: 'welcome',
   exact: true,
   component: () => <WelcomePage />,
+});
+
+registerRoute({
+  path: '/welcome/pods',
+  sidebar: 'welcome-pods',
+  name: 'welcome-pods',
+  exact: true,
+  component: () => <PodsPage />,
 });
