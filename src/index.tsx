@@ -1,4 +1,5 @@
 import {
+  K8s,
   registerAppBarAction,
   registerRoute,
   registerSidebarEntry,
@@ -7,9 +8,32 @@ import { SectionBox } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { Button, Typography } from '@mui/material';
 
 function WelcomePage() {
+  const [nodes, nodesError] = K8s.ResourceClasses.Node.useList();
+
+  if (!nodes && !nodesError) {
+    return (
+      <SectionBox title="Welcome">
+        <Typography>Loading nodes...</Typography>
+      </SectionBox>
+    );
+  }
+
+  if (nodesError || !nodes) {
+    return (
+      <SectionBox title="Welcome">
+        <Typography>Could not load nodes: {String(nodesError)}</Typography>
+      </SectionBox>
+    );
+  }
+
   return (
     <SectionBox title="Welcome">
-      <Typography>This page comes from my first Headlamp plugin.</Typography>
+      <Typography>This cluster has {nodes.length} node(s).</Typography>
+      {nodes.map(node => (
+        <Typography key={node.metadata.name}>
+          {node.metadata.name}: kubelet {node.jsonData.status?.nodeInfo?.kubeletVersion}
+        </Typography>
+      ))}
     </SectionBox>
   );
 }
