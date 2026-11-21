@@ -85,33 +85,35 @@ function HelloButton() {
 
 registerAppBarAction(<HelloButton />);
 
-registerSidebarEntry({
+interface WelcomePageOptions {
+  name: string;
+  parent: string;
+  label: string;
+  path: string;
+  icon?: string;
+  component: () => JSX.Element;
+}
+
+// Every page needs a sidebar entry and a route, so one helper registers both.
+function registerWelcomePage({ name, parent, label, path, icon, component }: WelcomePageOptions) {
+  registerSidebarEntry({ name, url: path, parent, label, icon });
+  registerRoute({ path, sidebar: name, name, exact: true, component });
+}
+
+registerWelcomePage({
   name: 'welcome',
+  parent: '',
   label: 'Welcome',
-  url: '/welcome',
-  icon: 'mdi:kubernetes',
-});
-
-registerSidebarEntry({
-  parent: 'welcome',
-  name: 'welcome-pods',
-  label: 'Pods',
-  url: '/welcome/pods',
-});
-
-registerRoute({
   path: '/welcome',
-  sidebar: 'welcome',
-  name: 'welcome',
-  exact: true,
+  icon: 'mdi:kubernetes',
   component: () => <WelcomePage />,
 });
 
-registerRoute({
-  path: '/welcome/pods',
-  sidebar: 'welcome-pods',
+registerWelcomePage({
   name: 'welcome-pods',
-  exact: true,
+  parent: 'welcome',
+  label: 'Pods',
+  path: '/welcome/pods',
   component: () => <PodsPage />,
 });
 
