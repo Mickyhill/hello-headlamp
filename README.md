@@ -10,6 +10,7 @@ A small Headlamp plugin I built to learn the plugin system.
 - Adds a Pods page under Welcome with a sortable, filterable list of pods, built with ResourceListView
 - Adds a Container Images column to Headlamp's built-in Pods list
 - Adds a Container Resources section to the built-in Pod detail page, showing CPU and memory requests and limits per container
+- Adds a settings page under Settings, Plugins, hello-headlamp with a switch to show or hide the Container Resources section, stored with ConfigStore
 
 ## Run it locally
 

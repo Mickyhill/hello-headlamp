@@ -2,6 +2,7 @@ import {
   K8s,
   registerAppBarAction,
   registerDetailsViewSectionsProcessor,
+  registerPluginSettings,
   registerResourceTableColumnsProcessor,
   registerRoute,
   registerSidebarEntry,
@@ -14,6 +15,8 @@ import {
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import Pod from '@kinvolk/headlamp-plugin/lib/K8s/pod';
 import { Button, Tooltip, Typography } from '@mui/material';
+import { getConfig } from './config';
+import HelloHeadlampSettings from './settings';
 
 function WelcomePage() {
   const [nodes, nodesError] = K8s.ResourceClasses.Node.useList();
@@ -149,6 +152,11 @@ registerDetailsViewSectionsProcessor(function addContainerResourcesSection(resou
     return sections;
   }
 
+  // Respect the switch on the plugin settings page.
+  if (!getConfig().showContainerResources) {
+    return sections;
+  }
+
   const sectionId = 'hello-headlamp-container-resources';
   if (sections.some(s => typeof s === 'object' && s !== null && 'id' in s && s.id === sectionId)) {
     return sections;
@@ -192,3 +200,6 @@ registerDetailsViewSectionsProcessor(function addContainerResourcesSection(resou
   updated.splice(idx + 1, 0, newSection);
   return updated;
 });
+
+// The first argument must match the plugin name in package.json.
+registerPluginSettings('hello-headlamp', HelloHeadlampSettings, true);
