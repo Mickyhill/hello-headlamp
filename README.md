@@ -4,6 +4,7 @@ A small Headlamp plugin I built to learn the plugin system.
 
 ## What it does
 
+- Checks which API groups exist in the cluster with ApiProxy.request, the same approach the Kyverno plugin uses, and shows the result on the Welcome page
 - Adds a Say Hello button to the app bar
 - Adds a Welcome entry to the cluster sidebar
 - Shows a Welcome page with the number of nodes in the cluster, plus each node's name and kubelet version, read live with K8s.ResourceClasses.Node.useList()

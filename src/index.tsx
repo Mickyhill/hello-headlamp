@@ -15,6 +15,7 @@ import {
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import Pod from '@kinvolk/headlamp-plugin/lib/K8s/pod';
 import { Button, Tooltip, Typography } from '@mui/material';
+import ApiGroupStatus from './ApiGroupStatus';
 import { getConfig } from './config';
 import HelloHeadlampSettings from './settings';
 
@@ -45,6 +46,7 @@ function WelcomePage() {
           {node.metadata.name}: kubelet {node.jsonData.status?.nodeInfo?.kubeletVersion}
         </Typography>
       ))}
+      <ApiGroupStatus />
     </SectionBox>
   );
 }
